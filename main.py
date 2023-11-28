@@ -1,7 +1,7 @@
 import senko
 import wifimgr
 from machine import UART, Pin, ADC, I2C
-from machine import WDT
+from machine import WDT, reset
 import utime
 from time import sleep
 from ntptime import settime
@@ -9,7 +9,7 @@ from ntptime import settime
 OTA = senko.Senko(
   user="lysistech", # Required
   repo="environment", # Required
-  branch="master", # Optional: Defaults to "master"
+  branch="main", # Optional: Defaults to "master"
   files = ["main.py"]
 )
 
@@ -33,6 +33,9 @@ wlan = wifimgr.get_connection()
 if wlan is None:
     print("Could not initialize the network connection.")
 
+values = range(200)
+sl=10000
+
 try:
  settime()
  print("Internet ok, Time Set!!!!!")
@@ -50,6 +53,14 @@ except:
       if i>100:
         sl=360000  
 
+while (1):
+
+  if OTA.update():
+      print("Updated to the latest version! Rebooting...")
+      machine.reset()
+
+  print("Going to sleep............................")
+  utime.sleep_ms(30000)     
 
 wdt.feed()
 
