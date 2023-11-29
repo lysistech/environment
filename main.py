@@ -6,12 +6,7 @@ import utime
 from time import sleep
 from ntptime import settime
 
-OTA = senko.Senko(
-  user="lysistech", # Required
-  repo="environment", # Required
-  branch="main", # Optional: Defaults to "master"
-  files = ["main.py"]
-)
+OTA = senko.Senko(url="https://github.com/", user="lysistech", repo="environment",  branch="main", files = ["main.py"])
 
 try:
   import usocket as socket
@@ -63,6 +58,7 @@ while (1):
 
   print("Going to sleep............................")
   utime.sleep_ms(30000)     #30 sec.
+  print("GOOD MORNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
 wdt.feed()
 
