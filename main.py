@@ -58,9 +58,11 @@ while (1):
   if OTA.update():
       print("Updated to the latest version! Rebooting...")
       machine.reset()
+  else:
+     print("No UPDATES Detected@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
 
   print("Going to sleep............................")
-  utime.sleep_ms(30000)     
+  utime.sleep_ms(30000)     #30 sec.
 
 wdt.feed()
 
