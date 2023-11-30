@@ -32,9 +32,9 @@ class Senko:
         y = y_hash.digest()
 
         if str(x) == str(y):
-            return True
+            return 1
         else:
-            return False
+            return 0
 
     def _get_file(self, url):
         #print("URL is: ", url)
