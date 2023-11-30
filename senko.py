@@ -1,12 +1,13 @@
 import urequests
 import uhashlib
+import gc
 
 
 class Senko:
     raw = "https://raw.githubusercontent.com"
     github = "https://github.com"
 
-    def __init__(self, user, repo, url=None, branch="master", working_dir="app", files=["boot.py", "main.py"], headers={}):
+    def __init__(self, user, repo, url=None, branch="master", working_dir="", files=["boot.py", "main.py"], headers={}):
         """Senko OTA agent class.
 
         Args:
@@ -36,9 +37,15 @@ class Senko:
             return False
 
     def _get_file(self, url):
-        payload = urequests.get(url, headers=self.headers)
+        print("URL is: ", url)
+        headers = {
+            "accept": "application/json",
+             "Accept-Encoding": "utf-8"
+                  }
+        payload = urequests.get(url, headers=headers)
         code = payload.status_code
-
+        print("CODE is: ", code)
+        gc.collect()
         if code == 200:
             return payload.text
         else:

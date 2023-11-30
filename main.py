@@ -5,13 +5,19 @@ from machine import WDT, reset
 import utime
 from time import sleep
 from ntptime import settime
+import urequests
+import gc
+import micropython
 
-OTA = senko.Senko(url="https://github.com/", user="lysistech", repo="environment",  branch="main", files = ["main.py"])
+OTA = senko.Senko(url="https://github.com/lysistech/environment/blob/main/", user="lysistech", repo="environment",  branch="main", files = ["main.py"])
 
-try:
-  import usocket as socket
-except:
-  import socket
+print(micropython.mem_info())
+
+
+# try:
+#   import usocket as socket
+# except:
+#   import socket
 
 def deepsleep (duration):
     try:
@@ -50,14 +56,20 @@ except:
 
 while (1):
 
-  if OTA.update():
-      print("Updated to the latest version! Rebooting...")
-      machine.reset()
-  else:
-     print("No UPDATES Detected@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+  print("Getting url ..................")
+  gc.collect()
+  print("Mem:", gc.mem_free())
+  
 
+  if OTA.update():
+       print("Updated to the latest version! Rebooting...")
+       reset()
+  else:
+      print("No UPDATES Detected@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+  gc.collect()
+  print("Mem 2:", gc.mem_free())
   print("Going to sleep............................")
-  utime.sleep_ms(30000)     #30 sec.
+  utime.sleep_ms(10000)     #30 sec.
   print("GOOD MORNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
 wdt.feed()
