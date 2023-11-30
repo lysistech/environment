@@ -37,7 +37,7 @@ class Senko:
             return False
 
     def _get_file(self, url):
-        print("URL is: ", url)
+        #print("URL is: ", url)
         headers = {
             "accept": "application/json",
              "Accept-Encoding": "utf-8"
