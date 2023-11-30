@@ -77,9 +77,9 @@ class Senko:
             True - if is, False - if not.
         """
         if not self._check_all():
-            return False
+            return 0
         else:
-            return True
+            return 1
 
     def update(self):
         """Replace all changed files with newer one.
